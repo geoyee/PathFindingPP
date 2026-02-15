@@ -25,7 +25,6 @@
 mkdir build && cd build
 cmake ..
 cmake --build .
-cd build
 ./PathFinding_test
 ```
 
@@ -36,6 +35,30 @@ xmake f --test=y
 xmake
 xmake run PathFinding_test
 ```
+
+## GUI 可视化工具
+
+### 构建 GUI
+
+```bash
+# CMake
+mkdir build && cd build
+cmake .. -DPATH_FINDING_BUILD_GUI=ON
+cmake --build .
+./PathFinding_gui
+
+# XMake
+xmake f --gui=y
+xmake
+xmake run PathFinding_gui
+```
+
+### 使用方法
+
+1. 选择编辑模式（墙壁/起点/终点）
+2. 在网格上点击或拖拽绘制
+3. 选择算法和参数
+4. 点击 "Find Path" 开始寻路
 
 ## 使用示例
 
@@ -67,3 +90,4 @@ int main() {
 - C++14 或更高版本
 - CMake 或 XMake
 - Catch2 (仅测试需要)
+- Qt6 (仅 GUI 需要)

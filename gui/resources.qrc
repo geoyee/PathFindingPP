@@ -1,0 +1,10 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/">
+        <file>qml/Main.qml</file>
+    </qresource>
+    <qresource prefix="/i18n">
+        <file alias="pathfinding_en.qm">i18n/pathfinding_en.qm</file>
+        <file alias="pathfinding_zh.qm">i18n/pathfinding_zh.qm</file>
+    </qresource>
+</RCC>

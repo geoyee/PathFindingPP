@@ -16,6 +16,11 @@ option("shared", {
     description = "Build shared library",
 })
 
+option("gui", {
+    default = false,
+    description = "Build GUI application",
+})
+
 target("PathFinding", function()
     if has_config("shared") then
         set_kind("shared")
@@ -68,5 +73,20 @@ if has_config("test") then
         add_files("test/test_main.cpp")
         add_deps("PathFinding")
         add_packages("catch2")
+    end)
+end
+
+if has_config("gui") then
+    add_requires("qt6")
+
+    target("PathFinding_gui", function()
+        set_kind("binary")
+        add_files("gui/src/*.cpp", "gui/src/*.h", "gui/resources.qrc")
+        add_files("gui/qml/*.qml", { rules = "qt.qrc" })
+        add_deps("PathFinding")
+        add_packages("qt6")
+        add_includedirs("include", "gui/src")
+        add_defines("QT_NO_KEYWORDS")
+        add_rules("qt.moc", "qt.qrc")
     end)
 end
