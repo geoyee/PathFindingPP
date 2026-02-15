@@ -13,7 +13,7 @@ public:
     BiBreadthFirstFinder();
     explicit BiBreadthFirstFinder(const FinderOptions& options);
 
-    Util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
+    util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
 
 private:
     static constexpr int BY_START = 0;

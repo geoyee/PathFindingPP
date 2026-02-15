@@ -15,12 +15,12 @@ public:
     BiAStarFinder();
     explicit BiAStarFinder(const FinderOptions& options);
 
-    Util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
+    util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
 
 protected:
     void initHeuristic();
 
-    Heuristic::HeuristicFunc heuristic_;
+    heuristic::HeuristicFunc heuristic_;
 };
 } // namespace pathfinding
 

@@ -6,7 +6,7 @@ BiBreadthFirstFinder::BiBreadthFirstFinder() : Finder() { }
 
 BiBreadthFirstFinder::BiBreadthFirstFinder(const FinderOptions& options) : Finder(options) { }
 
-Util::Path BiBreadthFirstFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
+util::Path BiBreadthFirstFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
 {
     Node *startNode = grid.getNodeAt(startX, startY);
     Node *endNode = grid.getNodeAt(endX, endY);
@@ -39,7 +39,7 @@ Util::Path BiBreadthFirstFinder::findPath(int startX, int startY, int endX, int 
             {
                 if (neighbor->openedBy == BY_END)
                 {
-                    return Util::biBacktrace(node, neighbor);
+                    return util::biBacktrace(node, neighbor);
                 }
                 continue;
             }
@@ -64,7 +64,7 @@ Util::Path BiBreadthFirstFinder::findPath(int startX, int startY, int endX, int 
             {
                 if (neighbor->openedBy == BY_START)
                 {
-                    return Util::biBacktrace(neighbor, node);
+                    return util::biBacktrace(neighbor, node);
                 }
                 continue;
             }

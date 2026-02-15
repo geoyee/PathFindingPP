@@ -17,14 +17,14 @@ JumpPointFinder::JumpPointFinder(const FinderOptions& options) : Finder(options)
 
 void JumpPointFinder::initHeuristic()
 {
-    heuristic_ = Heuristic::manhattan;
+    heuristic_ = heuristic::manhattan;
     if (options_.diagonalMovement == DiagonalMovement::Never)
     {
-        heuristic_ = Heuristic::manhattan;
+        heuristic_ = heuristic::manhattan;
     }
     else
     {
-        heuristic_ = Heuristic::octile;
+        heuristic_ = heuristic::octile;
     }
 }
 
@@ -54,7 +54,7 @@ void JumpPointFinder::updateNode(Node *node)
     }
 }
 
-Util::Path JumpPointFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
+util::Path JumpPointFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
 {
     grid_ = &grid;
     startNode_ = grid.getNodeAt(startX, startY);
@@ -98,7 +98,7 @@ Util::Path JumpPointFinder::findPath(int startX, int startY, int endX, int endY,
 
         if (node == endNode_)
         {
-            return Util::expandPath(Util::backtrace(endNode_));
+            return util::expandPath(util::backtrace(endNode_));
         }
 
         identifySuccessors(node, jumpFunc, neighborFunc);
@@ -134,7 +134,7 @@ void JumpPointFinder::identifySuccessors(Node *node,
                 continue;
             }
 
-            double d = Heuristic::octile(std::abs(jx - node->x), std::abs(jy - node->y));
+            double d = heuristic::octile(std::abs(jx - node->x), std::abs(jy - node->y));
             double ng = node->g + d;
 
             if (!jumpNode->opened || ng < jumpNode->g)

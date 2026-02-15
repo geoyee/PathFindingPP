@@ -26,7 +26,7 @@ public:
     explicit Finder(const FinderOptions& options);
     virtual ~Finder() = default;
 
-    virtual Util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) = 0;
+    virtual util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) = 0;
 
 protected:
     void initDiagonalMovement();

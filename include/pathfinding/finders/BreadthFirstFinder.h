@@ -14,7 +14,7 @@ public:
     BreadthFirstFinder();
     explicit BreadthFirstFinder(const FinderOptions& options);
 
-    Util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
+    util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
 };
 } // namespace pathfinding
 

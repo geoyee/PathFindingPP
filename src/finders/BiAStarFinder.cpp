@@ -125,15 +125,15 @@ void BiAStarFinder::initHeuristic()
 {
     if (options_.diagonalMovement == DiagonalMovement::Never)
     {
-        heuristic_ = Heuristic::manhattan;
+        heuristic_ = heuristic::manhattan;
     }
     else
     {
-        heuristic_ = Heuristic::octile;
+        heuristic_ = heuristic::octile;
     }
 }
 
-Util::Path BiAStarFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
+util::Path BiAStarFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
 {
     auto cmp = [](Node *a, Node *b) { return a->f - b->f; };
     BinaryHeap<Node *, decltype(cmp)> startOpenList(cmp);
@@ -171,7 +171,7 @@ Util::Path BiAStarFinder::findPath(int startX, int startY, int endX, int endY, G
             }
             if (neighbor->openedBy == BY_END)
             {
-                return Util::biBacktrace(node, neighbor);
+                return util::biBacktrace(node, neighbor);
             }
 
             int x = neighbor->x;
@@ -212,7 +212,7 @@ Util::Path BiAStarFinder::findPath(int startX, int startY, int endX, int endY, G
             }
             if (neighbor->openedBy == BY_START)
             {
-                return Util::biBacktrace(neighbor, node);
+                return util::biBacktrace(neighbor, node);
             }
 
             int x = neighbor->x;

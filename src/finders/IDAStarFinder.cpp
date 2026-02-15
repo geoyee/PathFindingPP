@@ -22,15 +22,15 @@ void IDAStarFinder::initHeuristic()
 {
     if (options_.diagonalMovement == DiagonalMovement::Never)
     {
-        heuristic_ = Heuristic::manhattan;
+        heuristic_ = heuristic::manhattan;
     }
     else
     {
-        heuristic_ = Heuristic::octile;
+        heuristic_ = heuristic::octile;
     }
 }
 
-Util::Path IDAStarFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
+util::Path IDAStarFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
 {
     Node *startNode = grid.getNodeAt(startX, startY);
     Node *endNode = grid.getNodeAt(endX, endY);
@@ -45,7 +45,7 @@ Util::Path IDAStarFinder::findPath(int startX, int startY, int endX, int endY, G
 
     while (true)
     {
-        Util::Path route;
+        util::Path route;
         double t = search(startNode, 0, cutoff, route, 0, endNode, grid, startTime);
 
         if (std::isinf(t))
@@ -63,14 +63,14 @@ Util::Path IDAStarFinder::findPath(int startX, int startY, int endX, int endY, G
 }
 
 double IDAStarFinder::search(
-    Node *node, double g, double cutoff, Util::Path& route, int depth, Node *endNode, Grid& grid, double startTime)
+    Node *node, double g, double cutoff, util::Path& route, int depth, Node *endNode, Grid& grid, long long startTime)
 {
     if (timeLimit_ > 0)
     {
         auto now =
             std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch())
                 .count();
-        if (now - startTime > timeLimit_ * 1000)
+        if (now - startTime > static_cast<long long>(timeLimit_ * 1000))
         {
             return std::numeric_limits<double>::infinity();
         }

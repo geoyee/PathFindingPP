@@ -125,15 +125,15 @@ void AStarFinder::initHeuristic()
 {
     if (options_.diagonalMovement == DiagonalMovement::Never)
     {
-        heuristic_ = Heuristic::manhattan;
+        heuristic_ = heuristic::manhattan;
     }
     else
     {
-        heuristic_ = Heuristic::octile;
+        heuristic_ = heuristic::octile;
     }
 }
 
-Util::Path AStarFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
+util::Path AStarFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
 {
     auto cmp = [](Node *a, Node *b) { return a->f - b->f; };
     BinaryHeap<Node *, decltype(cmp)> openList(cmp);
@@ -154,7 +154,7 @@ Util::Path AStarFinder::findPath(int startX, int startY, int endX, int endY, Gri
 
         if (node == endNode)
         {
-            return Util::backtrace(endNode);
+            return util::backtrace(endNode);
         }
 
         auto neighbors = grid.getNeighbors(node, options_.diagonalMovement);

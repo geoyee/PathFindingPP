@@ -6,7 +6,7 @@
 
 namespace pathfinding
 {
-namespace Heuristic
+namespace heuristic
 {
 inline double manhattan(double dx, double dy)
 {
@@ -30,7 +30,7 @@ inline double chebyshev(double dx, double dy)
 }
 
 using HeuristicFunc = std::function<double(double, double)>;
-} // namespace Heuristic
+} // namespace heuristic
 } // namespace pathfinding
 
 #endif // !PATHFINDING_CORE_HEURISTIC_HPP

@@ -185,25 +185,25 @@ TEST_CASE("Heuristic", "[heuristic]")
 {
     SECTION("manhattan")
     {
-        REQUIRE(Heuristic::manhattan(3, 4) == 7);
-        REQUIRE(Heuristic::manhattan(0, 0) == 0);
+        REQUIRE(heuristic::manhattan(3, 4) == 7);
+        REQUIRE(heuristic::manhattan(0, 0) == 0);
     }
 
     SECTION("euclidean")
     {
-        REQUIRE(Heuristic::euclidean(3, 4) == Catch::Approx(5.0));
-        REQUIRE(Heuristic::euclidean(0, 0) == Catch::Approx(0.0));
+        REQUIRE(heuristic::euclidean(3, 4) == Catch::Approx(5.0));
+        REQUIRE(heuristic::euclidean(0, 0) == Catch::Approx(0.0));
     }
 
     SECTION("chebyshev")
     {
-        REQUIRE(Heuristic::chebyshev(3, 4) == 4);
-        REQUIRE(Heuristic::chebyshev(4, 3) == 4);
+        REQUIRE(heuristic::chebyshev(3, 4) == 4);
+        REQUIRE(heuristic::chebyshev(4, 3) == 4);
     }
 
     SECTION("octile")
     {
-        double result = Heuristic::octile(3, 4);
+        double result = heuristic::octile(3, 4);
         REQUIRE(result >= 4.0);
         REQUIRE(result <= 6.0);
         REQUIRE(result == Catch::Approx(4.0 + (std::sqrt(2.0) - 1.0) * 3.0));
@@ -214,7 +214,7 @@ TEST_CASE("Util - interpolate", "[util]")
 {
     SECTION("should return the interpolated path")
     {
-        auto path = Util::interpolate(0, 1, 0, 4);
+        auto path = util::interpolate(0, 1, 0, 4);
         REQUIRE(path.size() == 4);
         REQUIRE(path[0] == std::make_pair(0, 1));
         REQUIRE(path[1] == std::make_pair(0, 2));
@@ -227,17 +227,17 @@ TEST_CASE("Util - expandPath", "[util]")
 {
     SECTION("should return empty array given empty array")
     {
-        auto result = Util::expandPath({});
+        auto result = util::expandPath({});
         REQUIRE(result.empty());
     }
 
     SECTION("should return the expanded path")
     {
-        Util::Path path = {
+        util::Path path = {
             {0, 1},
             {0, 4}
         };
-        auto result = Util::expandPath(path);
+        auto result = util::expandPath(path);
         REQUIRE(result.size() == 4);
         REQUIRE(result[0] == std::make_pair(0, 1));
         REQUIRE(result[3] == std::make_pair(0, 4));
@@ -245,12 +245,12 @@ TEST_CASE("Util - expandPath", "[util]")
 
     SECTION("should expand multi-segment path")
     {
-        Util::Path path = {
+        util::Path path = {
             {0, 1},
             {0, 4},
             {2, 6}
         };
-        auto result = Util::expandPath(path);
+        auto result = util::expandPath(path);
         REQUIRE(result.size() == 6);
     }
 }
@@ -259,22 +259,22 @@ TEST_CASE("Util - compressPath", "[util]")
 {
     SECTION("should return original path if too short")
     {
-        Util::Path path = {
+        util::Path path = {
             {0, 1}
         };
-        auto result = Util::compressPath(path);
+        auto result = util::compressPath(path);
         REQUIRE(result.size() == 1);
     }
 
     SECTION("should return compressed path")
     {
-        Util::Path path = {
+        util::Path path = {
             {0, 1},
             {0, 2},
             {0, 3},
             {0, 4}
         };
-        auto result = Util::compressPath(path);
+        auto result = util::compressPath(path);
         REQUIRE(result.size() == 2);
         REQUIRE(result[0] == std::make_pair(0, 1));
         REQUIRE(result[1] == std::make_pair(0, 4));
@@ -282,7 +282,7 @@ TEST_CASE("Util - compressPath", "[util]")
 
     SECTION("should compress multi-segment path")
     {
-        Util::Path path = {
+        util::Path path = {
             {0, 1},
             {0, 2},
             {0, 3},
@@ -290,7 +290,7 @@ TEST_CASE("Util - compressPath", "[util]")
             {1, 5},
             {2, 6}
         };
-        auto result = Util::compressPath(path);
+        auto result = util::compressPath(path);
         REQUIRE(result.size() == 3);
     }
 }
@@ -529,11 +529,11 @@ TEST_CASE("Benchmarks", "[benchmark]")
 
     BENCHMARK("Path compression")
     {
-        Util::Path path;
+        util::Path path;
         for (int i = 0; i < 100; ++i)
         {
             path.push_back({i, 0});
         }
-        return Util::compressPath(path);
+        return util::compressPath(path);
     };
 }

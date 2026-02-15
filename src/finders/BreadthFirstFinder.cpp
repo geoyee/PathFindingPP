@@ -6,7 +6,7 @@ BreadthFirstFinder::BreadthFirstFinder() : Finder() { }
 
 BreadthFirstFinder::BreadthFirstFinder(const FinderOptions& options) : Finder(options) { }
 
-Util::Path BreadthFirstFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
+util::Path BreadthFirstFinder::findPath(int startX, int startY, int endX, int endY, Grid& grid)
 {
     std::queue<Node *> openList;
     Node *startNode = grid.getNodeAt(startX, startY);
@@ -23,7 +23,7 @@ Util::Path BreadthFirstFinder::findPath(int startX, int startY, int endX, int en
 
         if (node == endNode)
         {
-            return Util::backtrace(endNode);
+            return util::backtrace(endNode);
         }
 
         auto neighbors = grid.getNeighbors(node, options_.diagonalMovement);

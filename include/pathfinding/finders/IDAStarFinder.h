@@ -12,14 +12,14 @@ public:
     IDAStarFinder();
     explicit IDAStarFinder(const FinderOptions& options);
 
-    Util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
+    util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
 
 private:
     void initHeuristic();
     double search(
-        Node *node, double g, double cutoff, Util::Path& route, int depth, Node *endNode, Grid& grid, double startTime);
+        Node *node, double g, double cutoff, util::Path& route, int depth, Node *endNode, Grid& grid, long long startTime);
 
-    Heuristic::HeuristicFunc heuristic_;
+    heuristic::HeuristicFunc heuristic_;
     bool trackRecursion_ = false;
     double timeLimit_ = 0.0;
 };

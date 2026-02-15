@@ -5,7 +5,7 @@
 
 namespace pathfinding
 {
-namespace Util
+namespace util
 {
 Path backtrace(const Node *node)
 {
@@ -196,5 +196,5 @@ Path compressPath(const Path& path)
     compressed.push_back({px, py});
     return compressed;
 }
-} // namespace Util
+} // namespace util
 } // namespace pathfinding

@@ -16,7 +16,7 @@ public:
     JumpPointFinder();
     explicit JumpPointFinder(const FinderOptions& options);
 
-    Util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
+    util::Path findPath(int startX, int startY, int endX, int endY, Grid& grid) override;
 
 private:
     void initHeuristic();
@@ -35,7 +35,7 @@ private:
     Node *popNode();
     void updateNode(Node *node);
 
-    Heuristic::HeuristicFunc heuristic_;
+    heuristic::HeuristicFunc heuristic_;
     bool trackJumpRecursion_ = false;
     Grid *grid_ = nullptr;
     Node *startNode_ = nullptr;
