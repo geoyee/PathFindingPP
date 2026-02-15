@@ -205,7 +205,8 @@ TEST_CASE("Heuristic", "[heuristic]")
     {
         double result = Heuristic::octile(3, 4);
         REQUIRE(result >= 4.0);
-        REQUIRE(result <= 5.0);
+        REQUIRE(result <= 6.0);
+        REQUIRE(result == Catch::Approx(4.0 + (std::sqrt(2.0) - 1.0) * 3.0));
     }
 }
 
