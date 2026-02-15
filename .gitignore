@@ -46,3 +46,8 @@ install
 
 # XMake
 .xmake
+
+# IDE
+.vs
+.vscode
+.history

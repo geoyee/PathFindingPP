@@ -19,17 +19,41 @@
 
 ## 构建
 
+### CMake
+
 ```bash
 mkdir build && cd build
 cmake ..
 cmake --build .
 ```
 
+### XMake
+
+```bash
+xmake
+```
+
+构建测试：
+
+```bash
+xmake f --test=y
+xmake
+xmake run PathFinding_test
+```
+
 ## 运行测试
+
+### CMake
 
 ```bash
 cd build
 ./PathFinding_test
+```
+
+### XMake
+
+```bash
+xmake run PathFinding_test
 ```
 
 ## 使用示例
@@ -60,5 +84,5 @@ int main() {
 ## 依赖
 
 - C++14 或更高版本
-- CMake 3.15+
+- CMake 或 XMake
 - Catch2 (仅测试需要)
