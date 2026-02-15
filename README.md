@@ -17,7 +17,7 @@
 | `IDAStarFinder` | 迭代加深 A* 算法 |
 | `JumpPointFinder` | 跳点搜索算法 |
 
-## 构建
+## 构建及测试
 
 ### CMake
 
@@ -25,27 +25,6 @@
 mkdir build && cd build
 cmake ..
 cmake --build .
-```
-
-### XMake
-
-```bash
-xmake
-```
-
-构建测试：
-
-```bash
-xmake f --test=y
-xmake
-xmake run PathFinding_test
-```
-
-## 运行测试
-
-### CMake
-
-```bash
 cd build
 ./PathFinding_test
 ```
@@ -53,6 +32,8 @@ cd build
 ### XMake
 
 ```bash
+xmake f --test=y
+xmake
 xmake run PathFinding_test
 ```
 
