@@ -5,7 +5,7 @@
 
 namespace pathfinding
 {
-class DijkstraFinder : public AStarFinder
+class PATHFINDING_API DijkstraFinder : public AStarFinder
 {
 public:
     DijkstraFinder();

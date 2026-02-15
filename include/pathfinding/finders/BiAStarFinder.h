@@ -9,7 +9,7 @@
 
 namespace pathfinding
 {
-class BiAStarFinder : public Finder
+class PATHFINDING_API BiAStarFinder : public Finder
 {
 public:
     BiAStarFinder();

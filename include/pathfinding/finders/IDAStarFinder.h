@@ -6,7 +6,7 @@
 
 namespace pathfinding
 {
-class IDAStarFinder : public Finder
+class PATHFINDING_API IDAStarFinder : public Finder
 {
 public:
     IDAStarFinder();

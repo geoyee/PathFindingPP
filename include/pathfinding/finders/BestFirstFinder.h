@@ -5,7 +5,7 @@
 
 namespace pathfinding
 {
-class BestFirstFinder : public AStarFinder
+class PATHFINDING_API BestFirstFinder : public AStarFinder
 {
 public:
     BestFirstFinder();

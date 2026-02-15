@@ -9,7 +9,7 @@
 
 namespace pathfinding
 {
-class AStarFinder : public Finder
+class PATHFINDING_API AStarFinder : public Finder
 {
 public:
     AStarFinder();

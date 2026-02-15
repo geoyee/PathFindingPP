@@ -1,9 +1,11 @@
 #ifndef PATHFINDING_CORE_NODE_H
 #define PATHFINDING_CORE_NODE_H
 
+#include "pathfinding/core/Export.hpp"
+
 namespace pathfinding
 {
-class Node
+class PATHFINDING_API Node
 {
 public:
     int x;

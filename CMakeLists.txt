@@ -21,11 +21,17 @@ add_definitions(-D_USE_MATH_DEFINES)
 
 string(COMPARE EQUAL ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR} IS_MAIN_PROJECT)
 option(PATH_FINDING_BUILD_TEST "Build tests" ${IS_MAIN_PROJECT})
+option(PATH_FINDING_BUILD_SHARED "Build shared library" OFF)
 
 file(GLOB_RECURSE CODE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.c src/*.cc)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS include/*.h include/*.hpp)
 
-add_library(${PROJECT_NAME} STATIC ${CODE_FILES} ${HEADER_FILES})
+if (PATH_FINDING_BUILD_SHARED)
+  add_library(${PROJECT_NAME} SHARED ${CODE_FILES} ${HEADER_FILES})
+  target_compile_definitions(${PROJECT_NAME} PRIVATE PATHFINDING_BUILDING_DLL)
+else ()
+  add_library(${PROJECT_NAME} STATIC ${CODE_FILES} ${HEADER_FILES})
+endif ()
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                                                   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)

@@ -5,7 +5,7 @@
 
 namespace pathfinding
 {
-class BiBestFirstFinder : public BiAStarFinder
+class PATHFINDING_API BiBestFirstFinder : public BiAStarFinder
 {
 public:
     BiBestFirstFinder();

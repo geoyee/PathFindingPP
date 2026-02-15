@@ -10,7 +10,7 @@
 
 namespace pathfinding
 {
-class JumpPointFinder : public Finder
+class PATHFINDING_API JumpPointFinder : public Finder
 {
 public:
     JumpPointFinder();

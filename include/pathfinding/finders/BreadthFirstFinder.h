@@ -8,7 +8,7 @@
 namespace pathfinding
 {
 
-class BreadthFirstFinder : public Finder
+class PATHFINDING_API BreadthFirstFinder : public Finder
 {
 public:
     BreadthFirstFinder();

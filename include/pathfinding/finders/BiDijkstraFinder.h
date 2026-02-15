@@ -5,7 +5,7 @@
 
 namespace pathfinding
 {
-class BiDijkstraFinder : public BiAStarFinder
+class PATHFINDING_API BiDijkstraFinder : public BiAStarFinder
 {
 public:
     BiDijkstraFinder();

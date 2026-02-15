@@ -2,6 +2,7 @@
 #define PATHFINDING_CORE_GRID_H
 
 #include "pathfinding/core/DiagonalMovement.h"
+#include "pathfinding/core/Export.hpp"
 #include "pathfinding/core/Node.h"
 
 #include <vector>
@@ -9,7 +10,7 @@
 
 namespace pathfinding
 {
-class Grid
+class PATHFINDING_API Grid
 {
 public:
     int width;

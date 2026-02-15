@@ -7,7 +7,7 @@
 
 namespace pathfinding
 {
-class BiBreadthFirstFinder : public Finder
+class PATHFINDING_API BiBreadthFirstFinder : public Finder
 {
 public:
     BiBreadthFirstFinder();

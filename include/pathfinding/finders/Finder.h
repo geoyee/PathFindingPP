@@ -2,6 +2,7 @@
 #define PATHFINDING_FINDERS_FINDER_H
 
 #include "pathfinding/core/DiagonalMovement.h"
+#include "pathfinding/core/Export.hpp"
 #include "pathfinding/core/Grid.h"
 #include "pathfinding/core/Util.h"
 
@@ -18,7 +19,7 @@ struct FinderOptions
     double weight = 1.0;
 };
 
-class Finder
+class PATHFINDING_API Finder
 {
 public:
     Finder();
