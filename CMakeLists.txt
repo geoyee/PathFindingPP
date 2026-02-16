@@ -22,7 +22,7 @@ add_definitions(-D_USE_MATH_DEFINES)
 string(COMPARE EQUAL ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR} IS_MAIN_PROJECT)
 option(PATH_FINDING_BUILD_SHARED "Build shared library" OFF)
 option(PATH_FINDING_BUILD_TEST "Build tests" ${IS_MAIN_PROJECT})
-option(PATH_FINDING_BUILD_GUI "Build GUI application" ${IS_MAIN_PROJECT})
+option(PATH_FINDING_BUILD_visual "Build GUI application" ${IS_MAIN_PROJECT})
 
 file(GLOB_RECURSE CODE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.c src/*.cc)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS include/*.h include/*.hpp)
@@ -90,27 +90,27 @@ if (PATH_FINDING_BUILD_TEST)
   add_test(NAME PathFindingTest COMMAND ${PROJECT_NAME}_test)
 endif ()
 
-if (PATH_FINDING_BUILD_GUI)
+if (PATH_FINDING_BUILD_visual)
   find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Widgets)
 
   set(CMAKE_AUTOMOC ON)
   set(CMAKE_AUTORCC ON)
 
   set(GUI_SOURCES
-      gui/src/main.cpp
-      gui/src/GridModel.cpp
-      gui/src/GridModel.h
-      gui/src/PathFinderController.cpp
-      gui/src/PathFinderController.h
-      gui/src/LanguageManager.cpp
-      gui/src/LanguageManager.h
-      gui/resources.qrc)
+      visual/src/main.cpp
+      visual/src/GridModel.cpp
+      visual/src/GridModel.h
+      visual/src/PathFinderController.cpp
+      visual/src/PathFinderController.h
+      visual/src/LanguageManager.cpp
+      visual/src/LanguageManager.h
+      visual/resources.qrc)
 
-  add_executable(${PROJECT_NAME}_gui ${GUI_SOURCES})
-  target_link_libraries(${PROJECT_NAME}_gui PRIVATE ${PROJECT_NAME} Qt6::Core Qt6::Gui Qt6::Quick Qt6::Widgets)
-  target_include_directories(${PROJECT_NAME}_gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
-                                                         ${CMAKE_CURRENT_SOURCE_DIR}/gui/src)
-  target_compile_definitions(${PROJECT_NAME}_gui PRIVATE QT_NO_KEYWORDS)
+  add_executable(${PROJECT_NAME}_visual ${GUI_SOURCES})
+  target_link_libraries(${PROJECT_NAME}_visual PRIVATE ${PROJECT_NAME} Qt6::Core Qt6::Gui Qt6::Quick Qt6::Widgets)
+  target_include_directories(${PROJECT_NAME}_visual PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                                            ${CMAKE_CURRENT_SOURCE_DIR}/visual/src)
+  target_compile_definitions(${PROJECT_NAME}_visual PRIVATE QT_NO_KEYWORDS)
 endif ()
 
 install(

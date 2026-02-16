@@ -79,13 +79,13 @@ end
 if has_config("gui") then
     add_requires("qt6")
 
-    target("PathFinding_gui", function()
+    target("PathFinding_visual", function()
         set_kind("binary")
-        add_files("gui/src/*.cpp", "gui/src/*.h", "gui/resources.qrc")
-        add_files("gui/qml/*.qml", { rules = "qt.qrc" })
+        add_files("visual/src/*.cpp", "visual/src/*.h", "visual/resources.qrc")
+        add_files("visual/qml/*.qml", { rules = "qt.qrc" })
         add_deps("PathFinding")
         add_packages("qt6")
-        add_includedirs("include", "gui/src")
+        add_includedirs("include", "visual/src")
         add_defines("QT_NO_KEYWORDS")
         add_rules("qt.moc", "qt.qrc")
     end)

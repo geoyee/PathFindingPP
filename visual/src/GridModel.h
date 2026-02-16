@@ -44,6 +44,7 @@ public:
     QPoint endPoint() const;
     void setWidth(int width);
     void setHeight(int height);
+    std::vector<std::vector<int>> toMatrix() const;
 
     Q_INVOKABLE void toggleWall(int x, int y);
     Q_INVOKABLE void setStart(int x, int y);
@@ -54,8 +55,6 @@ public:
     Q_INVOKABLE void setVisited(const QSet<QPoint>& visited);
     Q_INVOKABLE bool isWall(int x, int y) const;
     Q_INVOKABLE void setWall(int x, int y, bool wall);
-
-    std::vector<std::vector<int>> toMatrix() const;
 
 Q_SIGNALS:
     void widthChanged();

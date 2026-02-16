@@ -31,22 +31,16 @@ public:
     QStringList algorithms() const;
     QStringList diagonalOptions() const;
     QStringList heuristicOptions() const;
-
     int currentAlgorithm() const;
     void setCurrentAlgorithm(int algorithm);
-
     int diagonalMovement() const;
     void setDiagonalMovement(int movement);
-
     int heuristic() const;
     void setHeuristic(int h);
-
     double weight() const;
     void setWeight(double w);
-
     bool allowDiagonal() const;
     void setAllowDiagonal(bool allow);
-
     bool isSearching() const;
     int pathLength() const;
     int visitedCount() const;
@@ -89,4 +83,4 @@ private:
     QString m_statusMessage;
 };
 
-#endif
+#endif // !PATH_FINDER_CONTROLLER_H

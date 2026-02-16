@@ -11,7 +11,7 @@ ApplicationWindow {
     title: qsTr("PathFinding Visualizer")
 
     property int cellSize: 25
-    property int editMode: 0 // 0: wall, 1: start, 2: end
+    property int editMode: 0
 
     RowLayout {
         anchors.fill: parent
