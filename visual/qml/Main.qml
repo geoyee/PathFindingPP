@@ -12,6 +12,36 @@ ApplicationWindow {
 
     property int cellSize: 25
     property int editMode: 0
+    property bool isDrawing: false
+    property bool drawAsWall: true
+    property int lastCellX: -1
+    property int lastCellY: -1
+
+    function getCellFromPosition(x, y) {
+        var gridPos = gridView.mapFromItem(mouseOverlay, x, y)
+        var cellX = Math.floor(gridPos.x / cellSize)
+        var cellY = Math.floor(gridPos.y / cellSize)
+        if (cellX >= 0 && cellX < gridModel.width && cellY >= 0 && cellY < gridModel.height) {
+            return { x: cellX, y: cellY, valid: true }
+        }
+        return { x: -1, y: -1, valid: false }
+    }
+
+    function applyDrawAtCell(cellX, cellY) {
+        if (editMode === 0) {
+            var idx = cellY * gridModel.width + cellX
+            var cellType = gridModel.data(gridModel.index(idx, 0), 257)
+            if (drawAsWall && cellType === 0) {
+                gridModel.setWall(cellX, cellY, true)
+            } else if (!drawAsWall && cellType === 1) {
+                gridModel.setWall(cellX, cellY, false)
+            }
+        } else if (editMode === 1) {
+            gridModel.setStart(cellX, cellY)
+        } else if (editMode === 2) {
+            gridModel.setEnd(cellX, cellY)
+        }
+    }
 
     RowLayout {
         anchors.fill: parent
@@ -33,6 +63,7 @@ ApplicationWindow {
                 interactive: false
 
                 delegate: Rectangle {
+                    id: cellDelegate
                     width: gridView.cellWidth
                     height: gridView.cellHeight
                     color: {
@@ -48,35 +79,45 @@ ApplicationWindow {
                     }
                     border.color: "#e0e0e0"
                     border.width: 1
+                }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+                MouseArea {
+                    id: mouseOverlay
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-                        property bool pressed: false
+                    onPressed: function(mouse) {
+                        if (pathFinderController.isSearching) return
+                        var cell = getCellFromPosition(mouse.x, mouse.y)
+                        if (!cell.valid) return
 
-                        onPressed: function(mouse) {
-                            pressed = true
-                            handleMouse(mouse)
+                        isDrawing = true
+                        lastCellX = cell.x
+                        lastCellY = cell.y
+
+                        if (editMode === 0) {
+                            var idx = cell.y * gridModel.width + cell.x
+                            var cellType = gridModel.data(gridModel.index(idx, 0), 257)
+                            drawAsWall = (cellType !== 1)
                         }
-                        onReleased: pressed = false
-                        onPositionChanged: function(mouse) {
-                            if (pressed) handleMouse(mouse)
-                        }
+                        applyDrawAtCell(cell.x, cell.y)
+                    }
 
-                        function handleMouse(mouse) {
-                            if (pathFinderController.isSearching) return
-                            if (editMode === 0) {
-                                if (mouse.buttons & Qt.LeftButton) {
-                                    if (cellType === 0) gridModel.setWall(cellX, cellY, true)
-                                    else if (cellType === 1) gridModel.setWall(cellX, cellY, false)
-                                }
-                            } else if (editMode === 1) {
-                                if (cellType !== 3) gridModel.setStart(cellX, cellY)
-                            } else if (editMode === 2) {
-                                if (cellType !== 2) gridModel.setEnd(cellX, cellY)
-                            }
+                    onReleased: {
+                        isDrawing = false
+                        lastCellX = -1
+                        lastCellY = -1
+                    }
+
+                    onPositionChanged: function(mouse) {
+                        if (!isDrawing) return
+                        var cell = getCellFromPosition(mouse.x, mouse.y)
+                        if (!cell.valid) return
+                        if (cell.x !== lastCellX || cell.y !== lastCellY) {
+                            lastCellX = cell.x
+                            lastCellY = cell.y
+                            applyDrawAtCell(cell.x, cell.y)
                         }
                     }
                 }
