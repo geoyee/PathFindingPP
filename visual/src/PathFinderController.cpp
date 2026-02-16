@@ -13,20 +13,13 @@ PathFinderController::PathFinderController(GridModel *gridModel, QObject *parent
 QStringList PathFinderController::algorithms() const
 {
     return {tr("A*"),
-            tr("Breadth First"),
-            tr("Dijkstra"),
-            tr("Best First"),
-            tr("Bi-A*"),
-            tr("Bi-Breadth First"),
-            tr("Bi-Dijkstra"),
-            tr("Bi-Best First"),
             tr("IDA*"),
-            tr("Jump Point")};
-}
-
-QStringList PathFinderController::diagonalOptions() const
-{
-    return {tr("Never"), tr("Always"), tr("If At Most One Obstacle"), tr("Only When No Obstacles")};
+            tr("Breadth First Search"),
+            tr("Best First Search"),
+            tr("Dijkstra"),
+            tr("Jump Point Search"),
+            tr("Orthogonal Jump Point Search"),
+            tr("Trace")};
 }
 
 QStringList PathFinderController::heuristicOptions() const
@@ -47,21 +40,6 @@ void PathFinderController::setCurrentAlgorithm(int algorithm)
     }
     m_currentAlgorithm = algorithm;
     Q_EMIT currentAlgorithmChanged();
-}
-
-int PathFinderController::diagonalMovement() const
-{
-    return m_diagonalMovement;
-}
-
-void PathFinderController::setDiagonalMovement(int movement)
-{
-    if (m_diagonalMovement == movement)
-    {
-        return;
-    }
-    m_diagonalMovement = movement;
-    Q_EMIT diagonalMovementChanged();
 }
 
 int PathFinderController::heuristic() const
@@ -109,6 +87,51 @@ void PathFinderController::setAllowDiagonal(bool allow)
     Q_EMIT allowDiagonalChanged();
 }
 
+bool PathFinderController::biDirectional() const
+{
+    return m_biDirectional;
+}
+
+void PathFinderController::setBiDirectional(bool bi)
+{
+    if (m_biDirectional == bi)
+    {
+        return;
+    }
+    m_biDirectional = bi;
+    Q_EMIT biDirectionalChanged();
+}
+
+bool PathFinderController::dontCrossCorners() const
+{
+    return m_dontCrossCorners;
+}
+
+void PathFinderController::setDontCrossCorners(bool dont)
+{
+    if (m_dontCrossCorners == dont)
+    {
+        return;
+    }
+    m_dontCrossCorners = dont;
+    Q_EMIT dontCrossCornersChanged();
+}
+
+double PathFinderController::timeLimit() const
+{
+    return m_timeLimit;
+}
+
+void PathFinderController::setTimeLimit(double limit)
+{
+    if (qFuzzyCompare(m_timeLimit, limit))
+    {
+        return;
+    }
+    m_timeLimit = limit;
+    Q_EMIT timeLimitChanged();
+}
+
 bool PathFinderController::isSearching() const
 {
     return m_isSearching;
@@ -127,6 +150,94 @@ int PathFinderController::visitedCount() const
 QString PathFinderController::statusMessage() const
 {
     return m_statusMessage;
+}
+
+bool PathFinderController::showHeuristic() const
+{
+    switch (m_currentAlgorithm)
+    {
+        case 0 :
+        case 1 :
+        case 3 :
+        case 5 :
+        case 6 :
+        case 7 :
+            return true;
+        default :
+            return false;
+    }
+}
+
+bool PathFinderController::showOptions() const
+{
+    switch (m_currentAlgorithm)
+    {
+        case 0 :
+        case 1 :
+        case 2 :
+        case 3 :
+        case 4 :
+        case 7 :
+            return true;
+        default :
+            return false;
+    }
+}
+
+bool PathFinderController::showWeight() const
+{
+    return m_currentAlgorithm == 0 || m_currentAlgorithm == 1;
+}
+
+bool PathFinderController::showAllowDiagonal() const
+{
+    switch (m_currentAlgorithm)
+    {
+        case 0 :
+        case 1 :
+        case 2 :
+        case 3 :
+        case 4 :
+        case 7 :
+            return true;
+        default :
+            return false;
+    }
+}
+
+bool PathFinderController::showBiDirectional() const
+{
+    switch (m_currentAlgorithm)
+    {
+        case 0 :
+        case 2 :
+        case 3 :
+        case 4 :
+            return true;
+        default :
+            return false;
+    }
+}
+
+bool PathFinderController::showDontCrossCorners() const
+{
+    switch (m_currentAlgorithm)
+    {
+        case 0 :
+        case 1 :
+        case 2 :
+        case 3 :
+        case 4 :
+        case 7 :
+            return true;
+        default :
+            return false;
+    }
+}
+
+bool PathFinderController::showTimeLimit() const
+{
+    return m_currentAlgorithm == 1;
 }
 
 void PathFinderController::findPath()
@@ -148,21 +259,22 @@ void PathFinderController::findPath()
     pathfinding::FinderOptions opts;
     opts.weight = m_weight;
     opts.allowDiagonal = m_allowDiagonal;
+    opts.dontCrossCorners = m_dontCrossCorners;
 
-    switch (m_diagonalMovement)
+    if (m_allowDiagonal)
     {
-        case 0 :
-            opts.diagonalMovement = pathfinding::DiagonalMovement::Never;
-            break;
-        case 1 :
-            opts.diagonalMovement = pathfinding::DiagonalMovement::Always;
-            break;
-        case 2 :
-            opts.diagonalMovement = pathfinding::DiagonalMovement::IfAtMostOneObstacle;
-            break;
-        case 3 :
+        if (m_dontCrossCorners)
+        {
             opts.diagonalMovement = pathfinding::DiagonalMovement::OnlyWhenNoObstacles;
-            break;
+        }
+        else
+        {
+            opts.diagonalMovement = pathfinding::DiagonalMovement::IfAtMostOneObstacle;
+        }
+    }
+    else
+    {
+        opts.diagonalMovement = pathfinding::DiagonalMovement::Never;
     }
 
     pathfinding::util::Path path;
@@ -171,61 +283,76 @@ void PathFinderController::findPath()
     {
         case 0 :
         {
-            pathfinding::AStarFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            if (m_biDirectional)
+            {
+                pathfinding::BiAStarFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            else
+            {
+                pathfinding::AStarFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
             break;
         }
         case 1 :
-        {
-            pathfinding::BreadthFirstFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 2 :
-        {
-            pathfinding::DijkstraFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 3 :
-        {
-            pathfinding::BestFirstFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 4 :
-        {
-            pathfinding::BiAStarFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 5 :
-        {
-            pathfinding::BiBreadthFirstFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 6 :
-        {
-            pathfinding::BiDijkstraFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 7 :
-        {
-            pathfinding::BiBestFirstFinder finder(opts);
-            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
-            break;
-        }
-        case 8 :
         {
             pathfinding::IDAStarFinder finder(opts);
             path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
             break;
         }
-        case 9 :
+        case 2 :
+        {
+            if (m_biDirectional)
+            {
+                pathfinding::BiBreadthFirstFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            else
+            {
+                pathfinding::BreadthFirstFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            break;
+        }
+        case 3 :
+        {
+            if (m_biDirectional)
+            {
+                pathfinding::BiBestFirstFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            else
+            {
+                pathfinding::BestFirstFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            break;
+        }
+        case 4 :
+        {
+            if (m_biDirectional)
+            {
+                pathfinding::BiDijkstraFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            else
+            {
+                pathfinding::DijkstraFinder finder(opts);
+                path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            }
+            break;
+        }
+        case 5 :
+        case 6 :
         {
             pathfinding::JumpPointFinder finder(opts);
+            path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
+            break;
+        }
+        case 7 :
+        {
+            pathfinding::AStarFinder finder(opts);
             path = finder.findPath(start.x(), start.y(), end.x(), end.y(), grid);
             break;
         }
@@ -310,7 +437,7 @@ void PathFinderController::setIsSearching(bool searching)
 
 void PathFinderController::retranslate()
 {
+    setStatusMessage(tr("Ready"));
     Q_EMIT algorithmsChanged();
-    Q_EMIT diagonalOptionsChanged();
     Q_EMIT heuristicOptionsChanged();
 }

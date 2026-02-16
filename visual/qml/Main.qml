@@ -84,13 +84,13 @@ ApplicationWindow {
         }
 
         Pane {
-            Layout.preferredWidth: 280
+            Layout.preferredWidth: 300
             Layout.fillHeight: true
             padding: 15
 
             ColumnLayout {
                 anchors.fill: parent
-                spacing: 15
+                spacing: 12
 
                 Label {
                     text: qsTr("Algorithm")
@@ -106,31 +106,80 @@ ApplicationWindow {
                 }
 
                 Label {
-                    text: qsTr("Diagonal Movement")
+                    text: qsTr("Heuristic")
                     font.bold: true
+                    visible: pathFinderController.showHeuristic
                 }
 
                 ComboBox {
-                    id: diagonalCombo
+                    id: heuristicCombo
                     Layout.fillWidth: true
-                    model: pathFinderController.diagonalOptions
-                    currentIndex: pathFinderController.diagonalMovement
-                    onCurrentIndexChanged: pathFinderController.diagonalMovement = currentIndex
+                    model: pathFinderController.heuristicOptions
+                    currentIndex: pathFinderController.heuristic
+                    onCurrentIndexChanged: pathFinderController.heuristic = currentIndex
+                    visible: pathFinderController.showHeuristic
                 }
 
                 Label {
-                    text: qsTr("Weight: %1").arg(weightSlider.value.toFixed(1))
+                    text: qsTr("Options")
                     font.bold: true
+                    visible: pathFinderController.showOptions
                 }
 
-                Slider {
-                    id: weightSlider
+                ColumnLayout {
                     Layout.fillWidth: true
-                    from: 0.1
-                    to: 5.0
-                    value: pathFinderController.weight
-                    stepSize: 0.1
-                    onValueChanged: pathFinderController.weight = value
+                    spacing: 8
+                    visible: pathFinderController.showOptions
+
+                    CheckBox {
+                        text: qsTr("Allow Diagonal")
+                        checked: pathFinderController.allowDiagonal
+                        onCheckedChanged: pathFinderController.allowDiagonal = checked
+                        visible: pathFinderController.showAllowDiagonal
+                    }
+
+                    CheckBox {
+                        text: qsTr("Bi-directional")
+                        checked: pathFinderController.biDirectional
+                        onCheckedChanged: pathFinderController.biDirectional = checked
+                        visible: pathFinderController.showBiDirectional
+                    }
+
+                    CheckBox {
+                        text: qsTr("Don't Cross Corners")
+                        checked: pathFinderController.dontCrossCorners
+                        onCheckedChanged: pathFinderController.dontCrossCorners = checked
+                        visible: pathFinderController.showDontCrossCorners
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        visible: pathFinderController.showWeight
+
+                        Label { text: qsTr("Weight:") }
+                        SpinBox {
+                            from: 1
+                            to: 100
+                            value: pathFinderController.weight * 10
+                            onValueChanged: pathFinderController.weight = value / 10
+                            stepSize: 1
+                            Layout.fillWidth: true
+                        }
+                    }
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        visible: pathFinderController.showTimeLimit
+
+                        Label { text: qsTr("Time Limit (s):") }
+                        SpinBox {
+                            from: 0
+                            to: 60
+                            value: pathFinderController.timeLimit
+                            onValueChanged: pathFinderController.timeLimit = value
+                            Layout.fillWidth: true
+                        }
+                    }
                 }
 
                 Label {

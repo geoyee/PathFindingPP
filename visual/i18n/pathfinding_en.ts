@@ -32,56 +32,32 @@
         <translation>A*</translation>
     </message>
     <message>
-        <source>Breadth First</source>
-        <translation>Breadth First</translation>
+        <source>IDA*</source>
+        <translation>IDA*</translation>
+    </message>
+    <message>
+        <source>Breadth First Search</source>
+        <translation>Breadth First Search</translation>
+    </message>
+    <message>
+        <source>Best First Search</source>
+        <translation>Best First Search</translation>
     </message>
     <message>
         <source>Dijkstra</source>
         <translation>Dijkstra</translation>
     </message>
     <message>
-        <source>Best First</source>
-        <translation>Best First</translation>
+        <source>Jump Point Search</source>
+        <translation>Jump Point Search</translation>
     </message>
     <message>
-        <source>Bi-A*</source>
-        <translation>Bi-A*</translation>
+        <source>Orthogonal Jump Point Search</source>
+        <translation>Orthogonal Jump Point Search</translation>
     </message>
     <message>
-        <source>Bi-Breadth First</source>
-        <translation>Bi-Breadth First</translation>
-    </message>
-    <message>
-        <source>Bi-Dijkstra</source>
-        <translation>Bi-Dijkstra</translation>
-    </message>
-    <message>
-        <source>Bi-Best First</source>
-        <translation>Bi-Best First</translation>
-    </message>
-    <message>
-        <source>IDA*</source>
-        <translation>IDA*</translation>
-    </message>
-    <message>
-        <source>Jump Point</source>
-        <translation>Jump Point</translation>
-    </message>
-    <message>
-        <source>Never</source>
-        <translation>Never</translation>
-    </message>
-    <message>
-        <source>Always</source>
-        <translation>Always</translation>
-    </message>
-    <message>
-        <source>If At Most One Obstacle</source>
-        <translation>If At Most One Obstacle</translation>
-    </message>
-    <message>
-        <source>Only When No Obstacles</source>
-        <translation>Only When No Obstacles</translation>
+        <source>Trace</source>
+        <translation>Trace</translation>
     </message>
     <message>
         <source>Manhattan</source>
@@ -111,12 +87,32 @@
         <translation>Algorithm</translation>
     </message>
     <message>
-        <source>Diagonal Movement</source>
-        <translation>Diagonal Movement</translation>
+        <source>Heuristic</source>
+        <translation>Heuristic</translation>
     </message>
     <message>
-        <source>Weight: %1</source>
-        <translation>Weight: %1</translation>
+        <source>Options</source>
+        <translation>Options</translation>
+    </message>
+    <message>
+        <source>Allow Diagonal</source>
+        <translation>Allow Diagonal</translation>
+    </message>
+    <message>
+        <source>Bi-directional</source>
+        <translation>Bi-directional</translation>
+    </message>
+    <message>
+        <source>Don't Cross Corners</source>
+        <translation>Don't Cross Corners</translation>
+    </message>
+    <message>
+        <source>Weight:</source>
+        <translation>Weight:</translation>
+    </message>
+    <message>
+        <source>Time Limit (s):</source>
+        <translation>Time Limit (s):</translation>
     </message>
     <message>
         <source>Edit Mode</source>

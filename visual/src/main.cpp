@@ -15,6 +15,14 @@ int main(int argc, char *argv[])
     app.setApplicationVersion("0.0.1");
     app.setOrganizationName("PathFinding");
 
+    QTranslator translator;
+    QString systemLang = QLocale::system().name().startsWith("zh") ? "zh" : "en";
+    QString qmFile = QString(":/i18n/pathfinding_%1.qm").arg(systemLang);
+    if (translator.load(qmFile))
+    {
+        qApp->installTranslator(&translator);
+    }
+
     GridModel gridModel;
     PathFinderController controller(&gridModel);
 
@@ -23,9 +31,6 @@ int main(int argc, char *argv[])
 
     QObject::connect(
         &languageManager, &LanguageManager::languageChanged, &controller, &PathFinderController::retranslate);
-
-    QString systemLang = QLocale::system().name().startsWith("zh") ? "zh" : "en";
-    languageManager.switchLanguage(systemLang);
 
     engine.rootContext()->setContextProperty("gridModel", &gridModel);
     engine.rootContext()->setContextProperty("pathFinderController", &controller);

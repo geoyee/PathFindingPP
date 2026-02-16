@@ -1,11 +1,12 @@
 #include "LanguageManager.h"
 
 #include <QApplication>
+#include <QLocale>
 
 LanguageManager::LanguageManager(QQmlEngine *engine, QObject *parent)
     : QObject(parent)
     , m_engine(engine)
-    , m_currentLanguage("en")
+    , m_currentLanguage(QLocale::system().name().startsWith("zh") ? "zh" : "en")
 {
 }
 

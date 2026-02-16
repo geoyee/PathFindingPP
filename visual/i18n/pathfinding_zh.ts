@@ -32,56 +32,32 @@
         <translation>A*算法</translation>
     </message>
     <message>
-        <source>Breadth First</source>
-        <translation>广度优先</translation>
+        <source>IDA*</source>
+        <translation>迭代加深A*</translation>
+    </message>
+    <message>
+        <source>Breadth First Search</source>
+        <translation>广度优先搜索</translation>
+    </message>
+    <message>
+        <source>Best First Search</source>
+        <translation>最佳优先搜索</translation>
     </message>
     <message>
         <source>Dijkstra</source>
         <translation>Dijkstra算法</translation>
     </message>
     <message>
-        <source>Best First</source>
-        <translation>最佳优先</translation>
-    </message>
-    <message>
-        <source>Bi-A*</source>
-        <translation>双向A*</translation>
-    </message>
-    <message>
-        <source>Bi-Breadth First</source>
-        <translation>双向广度优先</translation>
-    </message>
-    <message>
-        <source>Bi-Dijkstra</source>
-        <translation>双向Dijkstra</translation>
-    </message>
-    <message>
-        <source>Bi-Best First</source>
-        <translation>双向最佳优先</translation>
-    </message>
-    <message>
-        <source>IDA*</source>
-        <translation>迭代加深A*</translation>
-    </message>
-    <message>
-        <source>Jump Point</source>
+        <source>Jump Point Search</source>
         <translation>跳点搜索</translation>
     </message>
     <message>
-        <source>Never</source>
-        <translation>从不</translation>
+        <source>Orthogonal Jump Point Search</source>
+        <translation>正交跳点搜索</translation>
     </message>
     <message>
-        <source>Always</source>
-        <translation>总是</translation>
-    </message>
-    <message>
-        <source>If At Most One Obstacle</source>
-        <translation>最多一个障碍</translation>
-    </message>
-    <message>
-        <source>Only When No Obstacles</source>
-        <translation>无障碍时</translation>
+        <source>Trace</source>
+        <translation>追踪算法</translation>
     </message>
     <message>
         <source>Manhattan</source>
@@ -111,12 +87,32 @@
         <translation>算法</translation>
     </message>
     <message>
-        <source>Diagonal Movement</source>
-        <translation>对角移动</translation>
+        <source>Heuristic</source>
+        <translation>启发函数</translation>
     </message>
     <message>
-        <source>Weight: %1</source>
-        <translation>权重：%1</translation>
+        <source>Options</source>
+        <translation>选项</translation>
+    </message>
+    <message>
+        <source>Allow Diagonal</source>
+        <translation>允许对角线</translation>
+    </message>
+    <message>
+        <source>Bi-directional</source>
+        <translation>双向搜索</translation>
+    </message>
+    <message>
+        <source>Don't Cross Corners</source>
+        <translation>不穿过角落</translation>
+    </message>
+    <message>
+        <source>Weight:</source>
+        <translation>权重：</translation>
+    </message>
+    <message>
+        <source>Time Limit (s):</source>
+        <translation>时间限制（秒）：</translation>
     </message>
     <message>
         <source>Edit Mode</source>
