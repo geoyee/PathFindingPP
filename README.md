@@ -43,12 +43,12 @@ xmake run PathFinding_test
 ```bash
 # CMake
 mkdir build && cd build
-cmake .. -DPATH_FINDING_BUILD_GUI=ON
+cmake .. -DPATH_FINDING_BUILD_VISUAL=ON
 cmake --build .
-./PathFinding_gui
+./PathFinding_visual
 
 # XMake
-xmake f --gui=y
+xmake f --visual=y
 xmake
 xmake run PathFinding_gui
 ```

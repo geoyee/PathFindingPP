@@ -16,9 +16,9 @@ option("shared", {
     description = "Build shared library",
 })
 
-option("gui", {
+option("visual", {
     default = false,
-    description = "Build GUI application",
+    description = "Build visualization application",
 })
 
 target("PathFinding", function()
@@ -76,7 +76,7 @@ if has_config("test") then
     end)
 end
 
-if has_config("gui") then
+if has_config("visual") then
     add_requires("qt6")
 
     target("PathFinding_visual", function()

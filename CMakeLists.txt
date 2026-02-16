@@ -22,7 +22,7 @@ add_definitions(-D_USE_MATH_DEFINES)
 string(COMPARE EQUAL ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR} IS_MAIN_PROJECT)
 option(PATH_FINDING_BUILD_SHARED "Build shared library" OFF)
 option(PATH_FINDING_BUILD_TEST "Build tests" ${IS_MAIN_PROJECT})
-option(PATH_FINDING_BUILD_visual "Build GUI application" ${IS_MAIN_PROJECT})
+option(PATH_FINDING_BUILD_VISUAL "Build visualization application" ${IS_MAIN_PROJECT})
 
 file(GLOB_RECURSE CODE_FILES CONFIGURE_DEPENDS src/*.cpp src/*.c src/*.cc)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS include/*.h include/*.hpp)
@@ -90,7 +90,7 @@ if (PATH_FINDING_BUILD_TEST)
   add_test(NAME PathFindingTest COMMAND ${PROJECT_NAME}_test)
 endif ()
 
-if (PATH_FINDING_BUILD_visual)
+if (PATH_FINDING_BUILD_VISUAL)
   find_package(Qt6 REQUIRED COMPONENTS Core Gui Quick Widgets)
 
   set(CMAKE_AUTOMOC ON)
