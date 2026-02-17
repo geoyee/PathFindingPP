@@ -102,7 +102,7 @@ int main() {
 
 ## Dependencies
 
-- C++14 or higher
+- C++17 or higher
 - CMake or XMake
 - Catch2 (for testing only)
 - Qt6 (for GUI only)

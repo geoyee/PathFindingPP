@@ -102,7 +102,7 @@ int main() {
 
 ## 依赖
 
-- C++14 或更高版本
+- C++17 或更高版本
 - CMake 或 XMake
 - Catch2 (仅测试需要)
 - Qt6 (仅 GUI 需要)
