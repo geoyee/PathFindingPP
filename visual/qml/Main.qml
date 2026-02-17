@@ -356,13 +356,13 @@ ApplicationWindow {
                     Label { text: qsTr("Language:") }
                     Button {
                         text: "EN"
-                        highlighted: languageManager.currentLanguage === "en"
-                        onClicked: languageManager.switchLanguage("en")
+                        highlighted: languageManager !== null && languageManager.currentLanguage === "en"
+                        onClicked: if (languageManager !== null) languageManager.switchLanguage("en")
                     }
                     Button {
                         text: "中文"
-                        highlighted: languageManager.currentLanguage === "zh"
-                        onClicked: languageManager.switchLanguage("zh")
+                        highlighted: languageManager !== null && languageManager.currentLanguage === "zh"
+                        onClicked: if (languageManager !== null) languageManager.switchLanguage("zh")
                     }
                 }
             }
