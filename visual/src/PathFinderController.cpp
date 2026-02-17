@@ -368,6 +368,7 @@ void PathFinderController::findPath()
     m_gridModel->setPath(qPath);
     setPathLength(static_cast<int>(path.size()));
     setVisitedCount(0);
+    Q_EMIT pathUpdated();
 
     if (path.empty())
     {

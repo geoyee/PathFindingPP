@@ -16,6 +16,7 @@ ApplicationWindow {
     property bool drawAsWall: true
     property int lastCellX: -1
     property int lastCellY: -1
+    property var pathPoints: []
 
     function getCellFromPosition(x, y) {
         var gridPos = gridView.mapFromItem(mouseOverlay, x, y)
@@ -41,6 +42,11 @@ ApplicationWindow {
         } else if (editMode === 2) {
             gridModel.setEnd(cellX, cellY)
         }
+    }
+
+    function updatePath(path) {
+        pathPoints = path
+        pathCanvas.requestPaint()
     }
 
     RowLayout {
@@ -72,13 +78,38 @@ ApplicationWindow {
                         case 1: return "#333333"
                         case 2: return "#4CAF50"
                         case 3: return "#F44336"
-                        case 4: return "#2196F3"
-                        case 5: return "#BBDEFB"
                         default: return "#ffffff"
                         }
                     }
                     border.color: "#e0e0e0"
                     border.width: 1
+                }
+
+                Canvas {
+                    id: pathCanvas
+                    anchors.fill: parent
+                    onPaint: {
+                        var ctx = getContext("2d")
+                        ctx.clearRect(0, 0, width, height)
+                        if (pathPoints.length < 2) return
+
+                        ctx.strokeStyle = "#FFD700"
+                        ctx.lineWidth = 3
+                        ctx.lineCap = "round"
+                        ctx.lineJoin = "round"
+
+                        ctx.beginPath()
+                        var startX = pathPoints[0].x * cellSize + cellSize / 2
+                        var startY = pathPoints[0].y * cellSize + cellSize / 2
+                        ctx.moveTo(startX, startY)
+
+                        for (var i = 1; i < pathPoints.length; i++) {
+                            var px = pathPoints[i].x * cellSize + cellSize / 2
+                            var py = pathPoints[i].y * cellSize + cellSize / 2
+                            ctx.lineTo(px, py)
+                        }
+                        ctx.stroke()
+                    }
                 }
 
                 MouseArea {
@@ -302,14 +333,22 @@ ApplicationWindow {
                     Button {
                         text: qsTr("Clear Path")
                         Layout.fillWidth: true
-                        onClicked: pathFinderController.clearPath()
+                        onClicked: {
+                            pathFinderController.clearPath()
+                            pathPoints = []
+                            pathCanvas.requestPaint()
+                        }
                     }
                 }
 
                 Button {
                     text: qsTr("Clear All")
                     Layout.fillWidth: true
-                    onClicked: gridModel.clearAll()
+                    onClicked: {
+                        gridModel.clearAll()
+                        pathPoints = []
+                        pathCanvas.requestPaint()
+                    }
                 }
 
                 RowLayout {
@@ -327,6 +366,14 @@ ApplicationWindow {
                     }
                 }
             }
+        }
+    }
+
+    Connections {
+        target: pathFinderController
+        function onPathUpdated() {
+            pathPoints = gridModel.getPathPoints()
+            pathCanvas.requestPaint()
         }
     }
 }

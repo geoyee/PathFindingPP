@@ -5,6 +5,7 @@
 #include <QPoint>
 #include <QVector>
 #include <QSet>
+#include <QVariantList>
 
 class GridModel : public QAbstractListModel
 {
@@ -27,9 +28,7 @@ public:
         Empty = 0,
         Wall = 1,
         Start = 2,
-        End = 3,
-        Path = 4,
-        Visited = 5
+        End = 3
     };
     Q_ENUM(CellType)
 
@@ -52,9 +51,9 @@ public:
     Q_INVOKABLE void clearPath();
     Q_INVOKABLE void clearAll();
     Q_INVOKABLE void setPath(const QVector<QPoint>& path);
-    Q_INVOKABLE void setVisited(const QSet<QPoint>& visited);
     Q_INVOKABLE bool isWall(int x, int y) const;
     Q_INVOKABLE void setWall(int x, int y, bool wall);
+    Q_INVOKABLE QVariantList getPathPoints() const;
 
 Q_SIGNALS:
     void widthChanged();
@@ -71,6 +70,7 @@ private:
     QVector<CellType> m_cells;
     QPoint m_startPoint{1, 1};
     QPoint m_endPoint{18, 18};
+    QVector<QPoint> m_path;
 };
 
 #endif // !GRID_MODEL_H

@@ -81,6 +81,7 @@ void GridModel::setWidth(int width)
     m_endPoint = QPoint(m_width - 2, m_height - 2);
     m_cells[indexFromPos(m_startPoint.x(), m_startPoint.y())] = Start;
     m_cells[indexFromPos(m_endPoint.x(), m_endPoint.y())] = End;
+    m_path.clear();
     endResetModel();
     Q_EMIT widthChanged();
 }
@@ -98,6 +99,7 @@ void GridModel::setHeight(int height)
     m_endPoint = QPoint(m_width - 2, m_height - 2);
     m_cells[indexFromPos(m_startPoint.x(), m_startPoint.y())] = Start;
     m_cells[indexFromPos(m_endPoint.x(), m_endPoint.y())] = End;
+    m_path.clear();
     endResetModel();
     Q_EMIT heightChanged();
 }
@@ -167,16 +169,7 @@ void GridModel::setEnd(int x, int y)
 
 void GridModel::clearPath()
 {
-    QVector<int> roles;
-    roles.append(CellRole);
-    for (int i = 0; i < static_cast<int>(m_cells.size()); ++i)
-    {
-        if (m_cells[i] == Path || m_cells[i] == Visited)
-        {
-            m_cells[i] = Empty;
-            Q_EMIT dataChanged(index(i), index(i), roles);
-        }
-    }
+    m_path.clear();
 }
 
 void GridModel::clearAll()
@@ -187,43 +180,13 @@ void GridModel::clearAll()
     m_endPoint = QPoint(m_width - 2, m_height - 2);
     m_cells[indexFromPos(m_startPoint.x(), m_startPoint.y())] = Start;
     m_cells[indexFromPos(m_endPoint.x(), m_endPoint.y())] = End;
+    m_path.clear();
     endResetModel();
 }
 
 void GridModel::setPath(const QVector<QPoint>& path)
 {
-    QVector<int> roles;
-    roles.append(CellRole);
-    for (const QPoint& p : path)
-    {
-        int idx = indexFromPos(p.x(), p.y());
-        if (idx >= 0 && idx < static_cast<int>(m_cells.size()))
-        {
-            if (m_cells[idx] == Empty || m_cells[idx] == Visited)
-            {
-                m_cells[idx] = Path;
-                Q_EMIT dataChanged(index(idx), index(idx), roles);
-            }
-        }
-    }
-}
-
-void GridModel::setVisited(const QSet<QPoint>& visited)
-{
-    QVector<int> roles;
-    roles.append(CellRole);
-    for (const QPoint& p : visited)
-    {
-        int idx = indexFromPos(p.x(), p.y());
-        if (idx >= 0 && idx < static_cast<int>(m_cells.size()))
-        {
-            if (m_cells[idx] == Empty)
-            {
-                m_cells[idx] = Visited;
-                Q_EMIT dataChanged(index(idx), index(idx), roles);
-            }
-        }
-    }
+    m_path = path;
 }
 
 bool GridModel::isWall(int x, int y) const
@@ -271,6 +234,19 @@ std::vector<std::vector<int>> GridModel::toMatrix() const
         }
     }
     return matrix;
+}
+
+QVariantList GridModel::getPathPoints() const
+{
+    QVariantList result;
+    for (const QPoint& p : m_path)
+    {
+        QVariantMap point;
+        point["x"] = p.x();
+        point["y"] = p.y();
+        result.append(point);
+    }
+    return result;
 }
 
 int GridModel::indexFromPos(int x, int y) const

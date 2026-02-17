@@ -83,6 +83,7 @@ Q_SIGNALS:
     void pathLengthChanged();
     void visitedCountChanged();
     void statusMessageChanged();
+    void pathUpdated();
 
 private:
     void setPathLength(int length);
