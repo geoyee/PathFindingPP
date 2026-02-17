@@ -9,7 +9,7 @@
 #else // !PATHFINDING_BUILDING_DLL && !PATHFINDING_DLL
 #define PATHFINDING_API
 #endif // PATHFINDING_BUILDING_DLL
-#else
+#else  // !_WIN32 && !__CYGWIN__
 #if __GNUC__ >= 4
 #define PATHFINDING_API __attribute__((visibility("default")))
 #else // __GNUC__ < 4

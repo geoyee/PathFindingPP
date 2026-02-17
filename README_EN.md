@@ -2,7 +2,7 @@
 
 English | [中文](README_CN.md)
 
-C++ implementation of [PathFinding.js](https://github.com/qiao/PathFinding.js)
+A C++ implementation of [PathFinding.js](https://github.com/qiao/PathFinding.js), along with a Qt6-based visualization tool inspired by the original repository's visualization tool
 
 ## Supported Algorithms
 
@@ -21,26 +21,22 @@ C++ implementation of [PathFinding.js](https://github.com/qiao/PathFinding.js)
 
 ## Build and Test
 
-### CMake
-
 ```bash
+# CMake
 mkdir build && cd build
 cmake ..
 cmake --build .
 ./PathFinding_test
-```
 
-### XMake
-
-```bash
+# XMake
 xmake f --test=y
 xmake
 xmake run PathFinding_test
 ```
 
-## GUI Visualization Tool
+## Visualization Tool
 
-### Build GUI
+### Build
 
 ```bash
 # CMake

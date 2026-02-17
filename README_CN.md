@@ -2,7 +2,7 @@
 
 [English](README_EN.md) | 中文
 
-[PathFinding.js](https://github.com/qiao/PathFinding.js) 的 C++ 实现
+[PathFinding.js](https://github.com/qiao/PathFinding.js) 的 C++ 实现，并参考原仓库的可视化工具提供了一个基于 Qt6 的可视化工具
 
 ## 支持的算法
 
@@ -21,26 +21,22 @@
 
 ## 构建及测试
 
-### CMake
-
 ```bash
+# CMake
 mkdir build && cd build
 cmake ..
 cmake --build .
 ./PathFinding_test
-```
 
-### XMake
-
-```bash
+# XMake
 xmake f --test=y
 xmake
 xmake run PathFinding_test
 ```
 
-## GUI 可视化工具
+## 可视化工具
 
-### 构建 GUI
+### 构建
 
 ```bash
 # CMake
@@ -60,7 +56,7 @@ xmake run PathFinding_visual
 1. 选择编辑模式（墙壁/起点/终点）
 2. 在网格上点击或拖拽绘制
 3. 选择算法和参数
-4. 点击 "Find Path" 开始寻路
+4. 点击 "寻路" 开始寻路
 
 ### 算法选项
 
