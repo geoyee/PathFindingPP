@@ -36,6 +36,8 @@ xmake run PathFinding_test
 
 ## 可视化工具
 
+![可视化工具](doc/image/vis_cn.png)
+
 ### 构建
 
 ```bash

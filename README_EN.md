@@ -36,6 +36,8 @@ xmake run PathFinding_test
 
 ## Visualization Tool
 
+![Visualization Tool](doc/image/vis_en.png)
+
 ### Build
 
 ```bash
