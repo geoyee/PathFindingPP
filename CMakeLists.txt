@@ -10,12 +10,14 @@ project(
   LANGUAGES C CXX
   VERSION 0.0.1)
 
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
-
 if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
   message(FATAL_ERROR "Please create a build directory and run CMake from there")
 endif ()
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+include(CompilerSettings)
 
 add_definitions(-D_USE_MATH_DEFINES)
 
@@ -36,49 +38,8 @@ endif ()
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
                                                   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION_RELEASE ON POSITION_INDEPENDENT_CODE ON)
 
-if (MSVC)
-  target_compile_options(
-    ${PROJECT_NAME}
-    INTERFACE /utf-8
-              /W4
-              /EHsc
-              /Zc:__cplusplus
-              /Zc:preprocessor
-              /Gy
-              $<$<CONFIG:Debug>:/Od>
-              $<$<CONFIG:Release>:/O2
-              /GL>)
-  target_link_options(
-    ${PROJECT_NAME}
-    INTERFACE
-    $<$<CONFIG:Release>:
-    /LTCG
-    /OPT:REF
-    /OPT:ICF
-    >)
-else ()
-  target_compile_options(
-    ${PROJECT_NAME}
-    INTERFACE -fPIC
-              -Wall
-              -Wextra
-              -Wconversion
-              -Wsign-compare
-              -Werror=uninitialized
-              -Werror=return-type
-              -Werror=unused-result
-              -Werror=suggest-override
-              -Wzero-as-null-pointer-constant
-              -Wmissing-declarations
-              -Wold-style-cast
-              -Wnon-virtual-dtor
-              $<$<CONFIG:Debug>:-g>
-              $<$<CONFIG:Release>:-O3
-              -flto>)
-  target_link_options(${PROJECT_NAME} INTERFACE $<$<CONFIG:Release>:-flto>)
-endif ()
+target_setting(${PROJECT_NAME})
 
 if (PATH_FINDING_BUILD_TEST)
   add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/3rd/Catch2)
